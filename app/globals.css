@@ -2,32 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.floating-label {
+	@apply absolute bg-white text-sm text-gray-400 bottom-2.5 left-2.5 transition-transform duration-200 peer-focus:-translate-y-6 peer-valid:-translate-y-6 peer-focus:text-xs peer-valid:text-xs peer-focus:text-slate-800 peer-focus:px-1 peer-valid:px-1;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.floating-label.error {
+	@apply peer-focus:text-red-500 text-red-500;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.floating-input {
+	@apply border rounded p-2 focus:outline-slate-800 w-full;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.floating-input.error {
+	@apply focus:outline-red-500 border-red-500;
+}
+
+.form-input {
+	@apply w-full my-1 rounded border focus:outline-slate-800 py-1 px-2;
+}
+
+.form-label {
+	@apply absolute -top-1 left-2 bg-white px-1 text-xs text-gray-400 peer-focus:text-slate-800;
+}
+
+.form-input.error {
+	@apply focus:outline-red-500 border-red-500;
+}
+
+.form-label.error {
+	@apply peer-focus:text-red-500 text-red-500;
 }
