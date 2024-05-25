@@ -29,7 +29,7 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({
 		document.addEventListener('mousedown', handleClickOutside);
 		return () =>
 			document.removeEventListener('mousedown', handleClickOutside);
-	}, []);
+	});
 	return createPortal(
 		<Overlay>
 			<motion.div
@@ -73,7 +73,10 @@ const MenuAction: React.FC = () => {
 			</button>
 			<AnimatePresence>
 				{isOpen && (
-					<MenuSidebar toggleMenuSidebar={toggleMenuSidebar} />
+					<MenuSidebar
+						key={'menu-sidebar'}
+						toggleMenuSidebar={toggleMenuSidebar}
+					/>
 				)}
 			</AnimatePresence>
 		</>

@@ -23,7 +23,7 @@ const Login: React.FC = () => {
 				<AnimatedLink href='/forgot-password' text='Forgot Password?' />
 			</p>
 			<p className='text-xs text-center'>
-				Don't have an account?{' '}
+				Don't have an account?
 				<AnimatedLink href='/sign-up' text='Sign up' />
 			</p>
 		</>

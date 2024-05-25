@@ -9,7 +9,7 @@ import { Suspense } from 'react';
 import { Loader } from 'react-feather';
 
 const NavigationBar: React.FC = () => (
-	<nav className='flex justify-around items-start p-3'>
+	<nav className='flex justify-around items-center md:items-start p-3'>
 		<section className='basis-1/5'>
 			<span className='hidden md:flex'>
 				<Social />
@@ -22,7 +22,7 @@ const NavigationBar: React.FC = () => (
 		<section className='flex flex-col gap-3 basis-3/5'>
 			<Link
 				href={'/'}
-				className={` ${libre.className} text-2xl md:text-4xl lg:text-5xl text-center`}>
+				className={`${libre.className} text-2xl md:text-4xl lg:text-5xl text-center`}>
 				RUDE
 			</Link>
 			<section className='hidden md:block'>

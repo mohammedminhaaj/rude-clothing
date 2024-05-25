@@ -27,7 +27,7 @@ const SearchActionPopUp: React.FC<SearchActionPopUpType> = ({
 		document.addEventListener('mousedown', handleClickOutside);
 		return () =>
 			document.removeEventListener('mousedown', handleClickOutside);
-	}, []);
+	});
 	return createPortal(
 		<Overlay>
 			<motion.div
@@ -73,7 +73,10 @@ const SearchAction: React.FC = () => {
 			</button>
 			<AnimatePresence>
 				{toggleSearch && (
-					<SearchActionPopUp toggleSearchBar={toggleSearchBar} />
+					<SearchActionPopUp
+						key={'search-sidebar'}
+						toggleSearchBar={toggleSearchBar}
+					/>
 				)}
 			</AnimatePresence>
 		</>

@@ -6,7 +6,7 @@ const Overlay: React.FC<Child> = ({ children }: Child) => (
 		initial={{ opacity: 0 }}
 		animate={{ opacity: 1 }}
 		exit={{ opacity: 0 }}
-		className='h-screen w-screen backdrop-blur-sm backdrop-brightness-75 fixed z-10'>
+		className='h-screen w-screen backdrop-blur-sm backdrop-brightness-75 fixed z-20'>
 		{children}
 	</motion.section>
 );
