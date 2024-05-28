@@ -36,13 +36,14 @@ const TagSection: React.FC<TagSectionProps> = ({ tags }: TagSectionProps) => {
 				{toggleTagSidebar && (
 					<>
 						<motion.div
-							key={'tag-sidebar'}
+							key={'tag-sidebar-overlay'}
 							initial={{ opacity: 0 }}
 							animate={{ opacity: 1 }}
 							exit={{ opacity: 0 }}
 							onClick={handleTagSidebar}
 							className='md:hidden z-20 backdrop-brightness-75 w-screen h-screen fixed top-0'></motion.div>
-						<motion.div
+						<motion.aside
+							key={'tag-sidebar'}
 							initial={{ x: -20, opacity: 0 }}
 							animate={{ x: 0, opacity: 1 }}
 							exit={{ x: -20, opacity: 0 }}
@@ -60,7 +61,7 @@ const TagSection: React.FC<TagSectionProps> = ({ tags }: TagSectionProps) => {
 							</header>
 
 							<TagList key={'filter-sidebar'} tags={tags} />
-						</motion.div>
+						</motion.aside>
 					</>
 				)}
 			</AnimatePresence>

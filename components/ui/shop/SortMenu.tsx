@@ -58,7 +58,7 @@ const SortMenu: React.FC = () => {
 			</button>
 			<AnimatePresence>
 				{toggleSortSidebar && (
-					<motion.section
+					<motion.aside
 						ref={sidebarRef}
 						initial={{ x: 20, opacity: 0 }}
 						animate={{ x: 0, opacity: 1 }}
@@ -121,7 +121,7 @@ const SortMenu: React.FC = () => {
 								</button>
 							</li>
 						</ul>
-					</motion.section>
+					</motion.aside>
 				)}
 			</AnimatePresence>
 		</>

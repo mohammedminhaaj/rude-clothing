@@ -32,7 +32,7 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({
 	});
 	return createPortal(
 		<Overlay>
-			<motion.div
+			<motion.aside
 				initial={{ opacity: 0, x: -100 }}
 				animate={{ opacity: 1, x: 0 }}
 				exit={{ opacity: 0, x: -100 }}
@@ -51,7 +51,7 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({
 					<NavItems />
 				</div>
 				<Social />
-			</motion.div>
+			</motion.aside>
 		</Overlay>,
 		document.getElementById('overlays')!
 	);
