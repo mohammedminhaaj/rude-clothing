@@ -10,12 +10,17 @@ type TagProp = {
 	header: string;
 };
 
+type TagChild = {
+	name: string;
+	colorCode: string | null;
+};
+
 type TagComponentProp = TagProp & {
-	childList: string[];
+	childList: TagChild[];
 };
 
 type TagItemProps = TagProp & {
-	child: string;
+	child: TagChild;
 };
 
 const TagItem: React.FC<TagItemProps> = ({ header, child }: TagItemProps) => {
@@ -28,18 +33,18 @@ const TagItem: React.FC<TagItemProps> = ({ header, child }: TagItemProps) => {
 
 	const { insertTag, removeTag } = useTagContext();
 
-	const paramAvailable = searchParams.has(header, child);
+	const paramAvailable = searchParams.has(header, child.name);
 
 	const handleCheck = () => {
 		const isChecked = checkboxRef.current?.checked;
 		const params = new URLSearchParams(searchParams);
 
 		if (isChecked) {
-			params.append(header, child);
-			insertTag(header, child);
+			params.append(header, child.name);
+			insertTag(header, child.name);
 		} else {
-			params.delete(header, child);
-			removeTag(header, child);
+			params.delete(header, child.name);
+			removeTag(header, child.name);
 		}
 
 		replace(`${pathName}?${params.toString()}`, { scroll: false });
@@ -55,8 +60,14 @@ const TagItem: React.FC<TagItemProps> = ({ header, child }: TagItemProps) => {
 				type='checkbox'
 				className='accent-slate-600'
 			/>
+			{child.colorCode && (
+				<span
+					className='rounded-full p-2 border'
+					style={{ backgroundColor: child.colorCode }}></span>
+			)}
+
 			<label className='cursor-pointer' htmlFor={id}>
-				{child}
+				{child.name}
 			</label>
 		</li>
 	);
@@ -175,17 +186,11 @@ const tagListPropsAreEqual: (
 	prevProps: TagSectionProps,
 	nextProps: TagSectionProps
 ) => boolean = (prevProps: TagSectionProps, nextProps: TagSectionProps) => {
-	const prevPropsEntries = Object.entries(prevProps);
-	const nextPropsEntries = Object.entries(nextProps);
+	const prevPropsEntries = Object.entries(prevProps.tags);
+	const nextPropsEntries = Object.entries(nextProps.tags);
 	try {
 		for (let i = 0; i < prevPropsEntries.length; i++) {
-			for (let j = 0; j < prevPropsEntries.length; j++) {
-				if (prevPropsEntries[i][0] !== nextPropsEntries[i][0])
-					return false;
-
-				if (prevPropsEntries[i][1][j] !== nextPropsEntries[i][1][j])
-					return false;
-			}
+			if (prevPropsEntries[i][0] !== nextPropsEntries[i][0]) return false;
 		}
 		return true;
 	} catch {

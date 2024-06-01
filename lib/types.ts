@@ -18,21 +18,20 @@ export interface TagMaster {
 	name: string;
 }
 
-export interface TagData {
-	name: string;
-	tag_master_id: TagMaster;
-}
-
 export type ProductListType = {
 	id: string;
 	name: string;
-	price: number;
-	original_price: number;
-	available_quantity: number;
-	product_image: { image_path: string }[];
-	on_sale: boolean;
+	price: string;
+	originalPrice: string;
+	onSale: boolean;
+	availableQuantity: number;
+	productImage: string;
 };
 
 export type SearchParamType = {
 	[key: string]: string;
+};
+
+export type ProductIdProp = {
+	productId: string;
 };

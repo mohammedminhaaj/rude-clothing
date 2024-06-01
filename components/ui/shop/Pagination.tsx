@@ -54,7 +54,7 @@ const Pagination: React.FC<{ totalRecords: number }> = ({
 				onClick={() => {
 					handlePageClick(i);
 				}}
-				className={`px-4 py-1 rounded-lg text-xs transition-colors duration-300 hover:text-gray-500 hover:border-gray-500 ${
+				className={`px-4 py-1 rounded text-xs transition-colors duration-300 hover:text-gray-500 hover:border-gray-500 ${
 					isActive && 'border border-black'
 				}`}
 				key={`page-${i}`}>
@@ -92,7 +92,7 @@ const Pagination: React.FC<{ totalRecords: number }> = ({
 					type='button'
 					title='Previous'
 					disabled={activePage === startPage}
-					className='p-1 rounded-lg transition-colors duration-300 hover:text-gray-500 disabled:text-gray-300'>
+					className='p-1 rounded transition-colors duration-300 hover:text-gray-500 disabled:text-gray-300'>
 					<ChevronLeft size={20} strokeWidth={1} />
 				</button>
 				{buttons}
@@ -101,7 +101,7 @@ const Pagination: React.FC<{ totalRecords: number }> = ({
 					disabled={activePage === endPage}
 					type='button'
 					title='Next'
-					className='p-1 rounded-lg transition-colors duration-300 hover:text-gray-500 disabled:text-gray-300'>
+					className='p-1 rounded transition-colors duration-300 hover:text-gray-500 disabled:text-gray-300'>
 					<ChevronRight size={20} strokeWidth={1} />
 				</button>
 			</div>

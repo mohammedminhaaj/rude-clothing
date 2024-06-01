@@ -8,7 +8,7 @@ import SortMenu from './SortMenu';
 
 export type TagSectionProps = {
 	tags: {
-		[key: string]: string[];
+		[key: string]: { name: string; colorCode: string | null }[];
 	};
 };
 
@@ -48,7 +48,7 @@ const TagSection: React.FC<TagSectionProps> = ({ tags }: TagSectionProps) => {
 							animate={{ x: 0, opacity: 1 }}
 							exit={{ x: -20, opacity: 0 }}
 							transition={{ bounce: false }}
-							className='md:relative md:col-span-3 md:h-fit fixed top-0 w-full sm:w-2/5 md:w-full bg-white md:bg-transparent h-screen z-20 md:z-0 overflow-y-auto overflow-x-hidden filter-column'>
+							className='md:sticky md:top-14 md:max-h-[90vh] md:col-span-3 md:h-fit fixed top-0 w-full sm:w-2/5 md:w-full bg-white md:bg-transparent h-screen z-20 md:z-0 overflow-y-hidden hover:overflow-y-auto overflow-x-hidden filter-column'>
 							<header className='md:hidden sticky top-0 bg-white z-10'>
 								<button
 									type='button'

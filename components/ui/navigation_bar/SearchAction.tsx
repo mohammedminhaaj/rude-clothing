@@ -42,7 +42,7 @@ const SearchActionPopUp: React.FC<SearchActionPopUpType> = ({
 					<input
 						placeholder='Search'
 						type='text'
-						className='w-full px-2 py-1 rounded-lg border'
+						className='w-full px-2 py-1 rounded border'
 					/>
 					<button
 						type='button'

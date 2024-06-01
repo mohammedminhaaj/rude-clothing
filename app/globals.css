@@ -33,3 +33,7 @@
 .form-label.error {
 	@apply peer-focus:text-red-500 text-red-500;
 }
+
+.top-white-shadow {
+	box-shadow: 0px -20px 25px 10px white;
+}

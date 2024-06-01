@@ -40,6 +40,15 @@ const SortMenu: React.FC = () => {
 		setToggleSortSidebar(false);
 	};
 
+	const handleClear = () => {
+		const params = new URLSearchParams(searchParams);
+
+		params.delete('sort');
+
+		replace(`${pathName}?${params.toString()}`, { scroll: false });
+		setToggleSortSidebar(false);
+	};
+
 	return (
 		<>
 			<button
@@ -68,6 +77,10 @@ const SortMenu: React.FC = () => {
 						<ul className='text-sm'>
 							<li className='hover:bg-gray-200 p-2'>
 								<button
+									className={`${
+										searchParams.has('sort', 'az') &&
+										'underline underline-offset-8'
+									}`}
 									onClick={handleClick}
 									value={'az'}
 									type='button'
@@ -77,6 +90,10 @@ const SortMenu: React.FC = () => {
 							</li>
 							<li className='hover:bg-gray-200 p-2'>
 								<button
+									className={`${
+										searchParams.has('sort', 'za') &&
+										'underline underline-offset-8'
+									}`}
 									onClick={handleClick}
 									value={'za'}
 									type='button'
@@ -86,6 +103,10 @@ const SortMenu: React.FC = () => {
 							</li>
 							<li className='hover:bg-gray-200 p-2'>
 								<button
+									className={`${
+										searchParams.has('sort', 'lowhigh') &&
+										'underline underline-offset-8'
+									}`}
 									onClick={handleClick}
 									value={'lowhigh'}
 									type='button'
@@ -95,6 +116,10 @@ const SortMenu: React.FC = () => {
 							</li>
 							<li className='hover:bg-gray-200 p-2'>
 								<button
+									className={`${
+										searchParams.has('sort', 'highlow') &&
+										'underline underline-offset-8'
+									}`}
 									onClick={handleClick}
 									value={'highlow'}
 									type='button'
@@ -104,6 +129,10 @@ const SortMenu: React.FC = () => {
 							</li>
 							<li className='hover:bg-gray-200 p-2'>
 								<button
+									className={`${
+										searchParams.has('sort', 'oldnew') &&
+										'underline underline-offset-8'
+									}`}
 									onClick={handleClick}
 									value={'oldnew'}
 									type='button'
@@ -113,6 +142,10 @@ const SortMenu: React.FC = () => {
 							</li>
 							<li className='hover:bg-gray-200 p-2'>
 								<button
+									className={`${
+										searchParams.has('sort', 'newold') &&
+										'underline underline-offset-8'
+									}`}
 									onClick={handleClick}
 									value={'newold'}
 									type='button'
@@ -120,6 +153,17 @@ const SortMenu: React.FC = () => {
 									Date, New to Old
 								</button>
 							</li>
+							{searchParams.has('sort') && (
+								<li className='text-center text-xs font-extralight'>
+									<button
+										type='button'
+										title='clear sort'
+										onClick={handleClear}
+										className='underline'>
+										Clear
+									</button>
+								</li>
+							)}
 						</ul>
 					</motion.aside>
 				)}
