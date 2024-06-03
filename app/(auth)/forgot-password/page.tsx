@@ -5,7 +5,7 @@ import { libre } from '@/app/layout';
 import AnimatedLink from '@/components/ui/AnimatedLink';
 
 export const metadata: Metadata = {
-	title: 'Rude Clothing | Forgot Password',
+	title: 'Forgot Password | Rude Clothing',
 };
 
 const ForgotPassword: React.FC = () => {

@@ -18,7 +18,7 @@ const NavActions: React.FC = async () => {
 				type='button'
 				title='shopping bag'
 				className='transition-all hover:scale-110 duration-300'>
-				<ShoppingBag size={20} />
+				<ShoppingBag strokeWidth={1} />
 			</button>
 		</section>
 	);

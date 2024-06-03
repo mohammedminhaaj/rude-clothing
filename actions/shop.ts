@@ -192,6 +192,7 @@ export const getSingleProduct = async (productId: string) => {
 			price: true,
 			originalPrice: true,
 			availableQuantity: true,
+			onSale: true,
 		},
 		with: {
 			productImages: {

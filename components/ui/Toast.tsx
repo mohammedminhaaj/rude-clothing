@@ -11,7 +11,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 type MessageMeta = {
 	icon: JSX.Element;
-	color: string;
+	// color: string;
 };
 
 const getMessageMeta: (type: MessageType) => MessageMeta = (
@@ -20,23 +20,23 @@ const getMessageMeta: (type: MessageType) => MessageMeta = (
 	switch (type) {
 		case MessageType.SUCCESS:
 			return {
-				icon: <CheckCircle />,
-				color: 'bg-green-200',
+				icon: <CheckCircle strokeWidth={1} />,
+				// color: 'bg-green-200',
 			};
 		case MessageType.WARNING:
 			return {
-				icon: <AlertCircle />,
-				color: 'bg-orange-200',
+				icon: <AlertCircle strokeWidth={1} />,
+				// color: 'bg-orange-200',
 			};
 		case MessageType.ERROR:
 			return {
-				icon: <XCircle />,
-				color: 'bg-red-200',
+				icon: <XCircle strokeWidth={1} />,
+				// color: 'bg-red-200',
 			};
 		case MessageType.INFO:
 			return {
-				icon: <Info />,
-				color: 'bg-blue-200',
+				icon: <Info strokeWidth={1} />,
+				// color: 'bg-blue-200',
 			};
 	}
 };
@@ -71,7 +71,7 @@ const Toast = () => {
 										stiffness: 100,
 									}}
 									whileHover={{ opacity: 0.8 }}
-									className={`${messageMeta.color} flex gap-3 items-center rounded w-full p-3`}>
+									className={`bg-white flex gap-3 items-center rounded w-full p-3`}>
 									<em className='basis-1/12 animate-pulse'>
 										{messageMeta.icon}
 									</em>
@@ -83,7 +83,10 @@ const Toast = () => {
 										type='button'
 										title='Close Notification'
 										className='basis-1/12'>
-										<X className='transition hover:scale-110 duration-300' />
+										<X
+											className='transition hover:scale-110 duration-300'
+											strokeWidth={1}
+										/>
 									</button>
 								</motion.div>
 							);

@@ -5,7 +5,7 @@ const Social: React.FC = () => (
 		<li>
 			<Instagram
 				className='transition-all hover:scale-110 duration-300'
-				size={20}
+				strokeWidth={1}
 			/>
 		</li>
 	</ul>

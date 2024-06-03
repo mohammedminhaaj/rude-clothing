@@ -5,7 +5,7 @@ import { libre } from '@/app/layout';
 import AnimatedLink from '@/components/ui/AnimatedLink';
 
 export const metadata: Metadata = {
-	title: 'Rude Clothing | Create Account',
+	title: 'Create Account | Rude Clothing',
 };
 
 const SignUp: React.FC = () => {

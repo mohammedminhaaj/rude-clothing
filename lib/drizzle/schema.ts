@@ -25,10 +25,10 @@ export const Users = authSchema.table('users', {
 });
 
 export const Profile = pgTable('profile', {
-	id: uuid('id').primaryKey().defaultRandom().notNull(),
 	authUser: uuid('auth_user_id')
 		.references(() => Users.id, { onDelete: 'cascade' })
-		.notNull(),
+		.notNull()
+		.primaryKey(),
 	fullName: varchar('full_name', { length: 255 }),
 	role: ProfileRole('profile_role').notNull().default('BASIC'),
 	isActive: boolean('is_active').default(true).notNull(),
@@ -38,7 +38,7 @@ export const Profile = pgTable('profile', {
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
 		.defaultNow()
 		.notNull()
-		.$onUpdateFn(() => sql`now()`),
+		.$onUpdateFn(() => new Date()),
 });
 
 export const TagMaster = pgTable('tag_master', {
@@ -50,7 +50,7 @@ export const TagMaster = pgTable('tag_master', {
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
 		.defaultNow()
 		.notNull()
-		.$onUpdateFn(() => sql`now()`),
+		.$onUpdateFn(() => new Date()),
 });
 
 export const TagData = pgTable(
@@ -70,7 +70,7 @@ export const TagData = pgTable(
 		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
 			.defaultNow()
 			.notNull()
-			.$onUpdateFn(() => sql`now()`),
+			.$onUpdateFn(() => new Date()),
 	},
 	(table) => {
 		return {
@@ -102,7 +102,7 @@ export const Product = pgTable('product', {
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
 		.defaultNow()
 		.notNull()
-		.$onUpdateFn(() => sql`now()`),
+		.$onUpdateFn(() => new Date()),
 });
 
 export const ProductImage = pgTable('product_image', {
@@ -119,7 +119,7 @@ export const ProductImage = pgTable('product_image', {
 	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
 		.defaultNow()
 		.notNull()
-		.$onUpdateFn(() => sql`now()`),
+		.$onUpdateFn(() => new Date()),
 });
 
 export const ProductTag = pgTable(
@@ -143,7 +143,7 @@ export const ProductTag = pgTable(
 		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
 			.defaultNow()
 			.notNull()
-			.$onUpdateFn(() => sql`now()`),
+			.$onUpdateFn(() => new Date()),
 	},
 	(table) => {
 		return {
@@ -155,23 +155,32 @@ export const ProductTag = pgTable(
 	}
 );
 
-export const Cart = pgTable('cart', {
-	id: serial('id').notNull().primaryKey(),
-	user: uuid('profile_id')
-		.references(() => Profile.id, { onDelete: 'cascade' })
-		.notNull(),
-	productTag: integer('product_tag_id')
-		.notNull()
-		.references(() => ProductTag.id, {
-			onDelete: 'cascade',
-		}),
+export const Cart = pgTable(
+	'cart',
+	{
+		id: serial('id').notNull().primaryKey(),
+		user: uuid('profile_id')
+			.references(() => Profile.authUser, { onDelete: 'cascade' })
+			.notNull(),
+		productTag: integer('product_tag_id')
+			.notNull()
+			.references(() => ProductTag.id, {
+				onDelete: 'cascade',
+			}),
 
-	quantity: integer('quantity').notNull().default(1),
-	createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' })
-		.defaultNow()
-		.notNull(),
-	updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
-		.defaultNow()
-		.notNull()
-		.$onUpdateFn(() => sql`now()`),
-});
+		quantity: integer('quantity').notNull().default(1),
+		createdAt: timestamp('created_at', { withTimezone: true, mode: 'date' })
+			.defaultNow()
+			.notNull(),
+		updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'date' })
+			.defaultNow()
+			.notNull()
+			.$onUpdateFn(() => new Date()),
+	},
+	(table) => ({
+		unique_user_product_tag: unique('unique_user_product_tag').on(
+			table.user,
+			table.productTag
+		),
+	})
+);

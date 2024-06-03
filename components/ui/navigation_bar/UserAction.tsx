@@ -23,7 +23,7 @@ const UserAction: React.FC<{ validUser: boolean | null }> = ({
 			type='button'
 			title='user'
 			className='transition-all hover:scale-110 duration-300'>
-			<User size={20} />
+			<User strokeWidth={1} />
 		</Link>
 	);
 };

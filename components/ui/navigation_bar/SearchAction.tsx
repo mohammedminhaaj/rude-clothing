@@ -38,7 +38,7 @@ const SearchActionPopUp: React.FC<SearchActionPopUpType> = ({
 				ref={searchRef}
 				className='h-20 bg-white w-full p-5'>
 				<div className='w-full flex gap-2 items-center'>
-					<Search />
+					<Search strokeWidth={1} />
 					<input
 						placeholder='Search'
 						type='text'
@@ -48,7 +48,7 @@ const SearchActionPopUp: React.FC<SearchActionPopUpType> = ({
 						type='button'
 						title='close menu'
 						onClick={toggleSearchBar}>
-						<X className='scale-125 hover:scale-95 transition-all duration-300' />
+						<X className='scale-125 hover:scale-95 transition-all duration-300' strokeWidth={1} />
 					</button>
 				</div>
 			</motion.div>
@@ -69,7 +69,7 @@ const SearchAction: React.FC = () => {
 				title='search'
 				type='button'
 				className='transition-all hover:scale-110 duration-300'>
-				<Search size={20} />
+				<Search strokeWidth={1} />
 			</button>
 			<AnimatePresence>
 				{toggleSearch && (

@@ -45,7 +45,7 @@ const MenuSidebar: React.FC<MenuSidebarProps> = ({
 							type='button'
 							title='close menu'
 							onClick={toggleMenuSidebar}>
-							<X className='scale-125 hover:scale-95 transition-all duration-300' />
+							<X className='scale-125 hover:scale-95 transition-all duration-300' strokeWidth={1} />
 						</button>
 					</header>
 					<NavItems />
@@ -69,7 +69,7 @@ const MenuAction: React.FC = () => {
 				title='open menu'
 				className=''
 				onClick={toggleMenuSidebar}>
-				<Menu />
+				<Menu strokeWidth={1} />
 			</button>
 			<AnimatePresence>
 				{isOpen && (

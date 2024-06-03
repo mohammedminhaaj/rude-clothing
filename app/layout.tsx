@@ -4,6 +4,7 @@ import './globals.css';
 import { Providers } from '@/store/Providers';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import Toast from '@/components/ui/Toast';
 
 const quicksand = Quicksand({ subsets: ['latin'] });
 export const libre = Libre_Baskerville({ weight: '700', subsets: ['latin'] });
@@ -22,7 +23,9 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={quicksand.className}>
 				<Providers>
-					<section id='overlays'></section>
+					<section id='overlays'>
+						<Toast />
+					</section>
 					<Header />
 					{children}
 					<Footer />
