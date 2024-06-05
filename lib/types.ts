@@ -35,3 +35,8 @@ export type SearchParamType = {
 export type ProductIdProp = {
 	productId: string;
 };
+
+export enum QuantityMode {
+	INCREASE,
+	DECREASE,
+}

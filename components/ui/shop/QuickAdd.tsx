@@ -52,7 +52,7 @@ const QuickAddSidebar: React.FC<QuickAddSidebarType> = ({
 						/>
 					</button>
 				</header>
-				<QuickAddSection productId={productId} />
+				<QuickAddSection handleToggleSidebar={handleToggleSidebar} productId={productId} />
 			</motion.aside>
 		</Overlay>,
 		document.getElementById('overlays')!

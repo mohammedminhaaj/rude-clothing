@@ -1,10 +1,11 @@
 import SizeInputSection from './SizeInputSection';
 import { motion } from 'framer-motion';
 import AddToCart from './AddToCart';
-import { SingleProductTag, SingleProductType } from './QuickAddSection';
+import { SingleProductTag } from './QuickAddSection';
 import { useState } from 'react';
 
 type QuickAddProductDetailsProps = {
+	id: string;
 	name: string;
 	description: string;
 	price: string;
@@ -12,9 +13,12 @@ type QuickAddProductDetailsProps = {
 	availableSizes: SingleProductTag[];
 	availableQuantity: number;
 	onSale: boolean;
+	productImage: string | undefined;
+	handleToggleSidebar: () => void;
 };
 
 const QuickAddProductDetails: React.FC<QuickAddProductDetailsProps> = ({
+	id,
 	name,
 	description,
 	price,
@@ -22,13 +26,15 @@ const QuickAddProductDetails: React.FC<QuickAddProductDetailsProps> = ({
 	availableSizes,
 	availableQuantity,
 	onSale,
+	productImage,
+	handleToggleSidebar,
 }: QuickAddProductDetailsProps) => {
-	const [productTag, setProductTag] = useState<number | null>(
-		availableSizes.length === 0 ? null : availableSizes[0].id
+	const [productTag, setProductTag] = useState<SingleProductTag | null>(
+		availableSizes.length === 0 ? null : availableSizes[0]
 	);
 
-	const updateProductTag = (id: number) => {
-		setProductTag(id);
+	const updateProductTag = (productTag: SingleProductTag) => {
+		setProductTag(productTag);
 	};
 
 	const salePercentage: number =
@@ -86,6 +92,11 @@ const QuickAddProductDetails: React.FC<QuickAddProductDetailsProps> = ({
 						isOutOfStock={availableQuantity <= 0}
 						isDisabled={!productTag}
 						selectedTag={productTag}
+						productId={id}
+						productName={name}
+						productPrice={price}
+						productImage={productImage}
+						handleToggleSidebar={handleToggleSidebar}
 					/>
 				</motion.div>
 			</section>

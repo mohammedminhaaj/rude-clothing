@@ -4,13 +4,13 @@ import { SingleProductTag } from './QuickAddSection';
 type SizeInputProps = {
 	tag: SingleProductTag;
 	isSelected: boolean;
-	updateProductTag: (id: number) => void;
+	updateProductTag: (productTag: SingleProductTag) => void;
 };
 
 type SizeInputSectionProps = {
 	availableSizes: SingleProductTag[];
-	selectedTag: number | null;
-	updateProductTag: (id: number) => void;
+	selectedTag: SingleProductTag | null;
+	updateProductTag: (productTag: SingleProductTag) => void;
 };
 
 const SizeInput: React.FC<SizeInputProps> = ({
@@ -23,7 +23,7 @@ const SizeInput: React.FC<SizeInputProps> = ({
 		<div className='size-10 flex items-center justify-center cursor-pointer'>
 			<input
 				onChange={() => {
-					updateProductTag(tag.id);
+					updateProductTag(tag);
 				}}
 				checked={isSelected}
 				name='radio-size'
@@ -34,7 +34,7 @@ const SizeInput: React.FC<SizeInputProps> = ({
 			<label
 				className='text-l rounded text-center cursor-pointer border w-full h-full peer-checked:border-slate-500 peer-checked:border-2 uppercase flex justify-center items-center'
 				htmlFor={inputId}>
-				{tag.tag.name}
+				{tag.name}
 			</label>
 		</div>
 	);
@@ -58,7 +58,7 @@ const SizeInputSection: React.FC<SizeInputSectionProps> = ({
 								key={item.id}
 								tag={item}
 								updateProductTag={updateProductTag}
-								isSelected={selectedTag === item.id}
+								isSelected={selectedTag?.id === item.id}
 							/>
 						))}
 					</fieldset>

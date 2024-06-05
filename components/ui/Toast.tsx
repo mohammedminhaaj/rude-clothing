@@ -71,7 +71,7 @@ const Toast = () => {
 										stiffness: 100,
 									}}
 									whileHover={{ opacity: 0.8 }}
-									className={`bg-white flex gap-3 items-center rounded w-full p-3`}>
+									className={`bg-white flex gap-3 items-center rounded w-full p-3 shadow`}>
 									<em className='basis-1/12 animate-pulse'>
 										{messageMeta.icon}
 									</em>

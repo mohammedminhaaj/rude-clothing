@@ -10,7 +10,16 @@ import {
 	TagMaster,
 } from '@/lib/drizzle/schema';
 import { SearchParamType } from '@/lib/types';
-import { SQL, asc, countDistinct, desc, eq, sql } from 'drizzle-orm';
+import {
+	InferModelFromColumns,
+	SQL,
+	and,
+	asc,
+	countDistinct,
+	desc,
+	eq,
+	sql,
+} from 'drizzle-orm';
 
 export const getTags = async () => {
 	const responseData: {
@@ -185,46 +194,48 @@ export const getProducts = async (searchParams: SearchParamType) => {
 };
 
 export const getSingleProduct = async (productId: string) => {
-	const result = db.query.Product.findFirst({
-		columns: {
-			name: true,
-			description: true,
-			price: true,
-			originalPrice: true,
-			availableQuantity: true,
-			onSale: true,
-		},
-		with: {
-			productImages: {
-				columns: {
-					imagePath: true,
-				},
-			},
-			tags: {
-				columns: {
-					id: true,
-				},
-				with: {
-					tag: {
-						columns: {
-							name: true,
-						},
-						with: {
-							tagMaster: {
-								columns: {
-									name: true,
-								},
-							},
-						},
-					},
-				},
-			},
-		},
-		where: (Product, { and, eq }) =>
-			and(eq(Product.isActive, true), eq(Product.id, productId)),
-	});
+	// const productTagSubQuery = db
+	// 	.select({
+	// 		data: sql`jsonb_build_object('id', ${ProductTag.id}, 'name', ${TagData.name})`,
+	// 	})
+	// 	.from(ProductTag)
+	// 	.innerJoin(TagData, eq(ProductTag.tagData, TagData.id));
 
-	const data = await result;
+	const queryResult = await db
+		.select({
+			name: Product.name,
+			description: Product.description,
+			price: Product.price,
+			originalPrice: Product.originalPrice,
+			availableQuantity: Product.availableQuantity,
+			onSale: Product.onSale,
+			productImages: sql<
+				string[]
+			>`jsonb_agg(DISTINCT ${ProductImage.imagePath})`,
+			availableSizes: sql<
+				{ id: number; name: string }[]
+			>`jsonb_agg(DISTINCT jsonb_build_object('id', ${ProductTag.id}, 'name', ${TagData.name}))`,
+		})
+		.from(Product)
+		.innerJoin(ProductImage, eq(Product.id, ProductImage.product))
+		.leftJoin(ProductTag, eq(Product.id, ProductTag.product))
+		.innerJoin(TagData, eq(ProductTag.tagData, TagData.id))
+		.innerJoin(TagMaster, eq(TagData.tagMaster, TagMaster.id))
+		.groupBy(
+			Product.name,
+			Product.description,
+			Product.price,
+			Product.originalPrice,
+			Product.availableQuantity,
+			Product.onSale
+		)
+		.where(
+			and(
+				eq(Product.isActive, true),
+				eq(Product.id, productId),
+				eq(TagMaster.name, 'size')
+			)
+		);
 
-	return data;
+	return queryResult;
 };

@@ -5,6 +5,7 @@ import { Providers } from '@/store/Providers';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Toast from '@/components/ui/Toast';
+import CartSidebar from '@/components/ui/cart/CartSidebar';
 
 const quicksand = Quicksand({ subsets: ['latin'] });
 export const libre = Libre_Baskerville({ weight: '700', subsets: ['latin'] });
@@ -25,6 +26,7 @@ export default function RootLayout({
 				<Providers>
 					<section id='overlays'>
 						<Toast />
+						<CartSidebar />
 					</section>
 					<Header />
 					{children}

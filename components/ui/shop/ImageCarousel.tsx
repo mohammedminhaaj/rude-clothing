@@ -64,7 +64,6 @@ const ImageCarousel: React.FC<{ images: string[] }> = ({
 					dragElastic={1}
 					onDragEnd={(e, { offset, velocity }) => {
 						const swipe = swipePower(offset.x, velocity.x);
-						console.log(swipe);
 
 						if (swipe < -swipeConfidenceThreshold) {
 							paginate(1);

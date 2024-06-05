@@ -8,12 +8,7 @@ import QuickAddProductDetails from './QuickAddProductDetails';
 
 export type SingleProductTag = {
 	id: number;
-	tag: {
-		name: string;
-		tagMaster: {
-			name: string;
-		};
-	};
+	name: string;
 };
 
 export type SingleProductType =
@@ -24,10 +19,8 @@ export type SingleProductType =
 			originalPrice: string;
 			availableQuantity: number;
 			onSale: boolean;
-			productImages: {
-				imagePath: string;
-			}[];
-			tags: SingleProductTag[];
+			productImages: string[];
+			availableSizes: SingleProductTag[];
 	  }
 	| undefined;
 
@@ -36,9 +29,14 @@ type ProductState = {
 	product: SingleProductType;
 };
 
-const QuickAddSection: React.FC<ProductIdProp> = ({
+type QuickAddSectionProp = ProductIdProp & {
+	handleToggleSidebar: () => void;
+};
+
+const QuickAddSection: React.FC<QuickAddSectionProp> = ({
 	productId,
-}: ProductIdProp) => {
+	handleToggleSidebar,
+}: QuickAddSectionProp) => {
 	const [{ isLoading, product }, setProductState] = useState<ProductState>({
 		isLoading: true,
 		product: undefined,
@@ -46,7 +44,7 @@ const QuickAddSection: React.FC<ProductIdProp> = ({
 
 	useEffect(() => {
 		(async () => {
-			const singleProduct = await getSingleProduct(productId);
+			const [singleProduct] = await getSingleProduct(productId);
 			setProductState((prev) => ({
 				...prev,
 				isLoading: false,
@@ -57,17 +55,13 @@ const QuickAddSection: React.FC<ProductIdProp> = ({
 
 	const supabase = createClient();
 
-	const availableSizes: SingleProductTag[] = [];
 	const productImages: string[] = [];
 
 	if (product) {
-		product.tags.map((item) => {
-			item.tag.tagMaster.name === 'size' && availableSizes.push(item);
-		});
 		product.productImages.map((item) =>
 			productImages.push(
-				supabase.storage.from('images').getPublicUrl(item.imagePath)
-					.data.publicUrl
+				supabase.storage.from('images').getPublicUrl(item).data
+					.publicUrl
 			)
 		);
 	}
@@ -88,13 +82,16 @@ const QuickAddSection: React.FC<ProductIdProp> = ({
 			</section>
 			<QuickAddProductDetails
 				{...{
+					id: productId,
 					name: product.name,
 					description: product.description,
 					price: product.price,
 					originalPrice: product.originalPrice,
-					availableSizes: availableSizes,
+					availableSizes: product.availableSizes,
 					availableQuantity: product.availableQuantity,
 					onSale: product.onSale,
+					productImage: productImages[0],
+					handleToggleSidebar: handleToggleSidebar,
 				}}
 			/>
 		</section>

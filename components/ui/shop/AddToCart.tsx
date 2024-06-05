@@ -3,29 +3,51 @@ import useToast from '@/hooks/useToast';
 import { MessageType } from '@/store/MessageProvider';
 import { useState } from 'react';
 import { Loader } from 'react-feather';
+import { SingleProductTag } from './QuickAddSection';
+import { useCartContext } from '@/store/CartProvider';
 
 type AddToCartProps = {
 	isOutOfStock: boolean;
 	isDisabled: boolean;
-	selectedTag: number | null;
+	selectedTag: SingleProductTag | null;
+	productId: string;
+	productName: string;
+	productPrice: string;
+	productImage: string | undefined;
+	handleToggleSidebar: () => void;
 };
 
 const AddToCart: React.FC<AddToCartProps> = ({
 	isOutOfStock,
 	isDisabled,
 	selectedTag,
+	productId,
+	productName,
+	productPrice,
+	productImage,
+	handleToggleSidebar,
 }: AddToCartProps) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const { insertCart, toggleCart } = useCartContext();
 
 	const toast = useToast();
 
 	const handleAddToCart = async () => {
 		setIsLoading(true);
-		const data = await addToCart(selectedTag!);
+		const data = await insertCart(
+			selectedTag!,
+			productId,
+			productName,
+			productPrice,
+			productImage
+		);
 		if (data.code >= 400) {
 			toast(data.message!, MessageType.ERROR);
 		} else {
 			toast(data.message!);
+			handleToggleSidebar();
+			toggleCart();
 		}
 		setIsLoading(false);
 	};
@@ -38,7 +60,7 @@ const AddToCart: React.FC<AddToCartProps> = ({
 		<button
 			disabled={isDisabled || isLoading}
 			onClick={isOutOfStock ? handleNotifyMe : handleAddToCart}
-			className='font-bold uppercase w-full p-3 rounded bg-slate-600 hover:bg-slate-800 text-white transition-colors duration-300 disabled:bg-slate-300 flex items-center justify-center'>
+			className='primary-button'>
 			{isOutOfStock ? (
 				'Notify Me'
 			) : isLoading ? (

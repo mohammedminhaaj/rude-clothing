@@ -37,3 +37,11 @@
 .top-white-shadow {
 	box-shadow: 0px -20px 25px 10px white;
 }
+
+.primary-button {
+	@apply flex gap-2 items-center justify-center hover:gap-4 w-full uppercase rounded bg-slate-600 hover:bg-slate-800 text-white font-bold px-4 py-2 transition-all duration-300;
+}
+
+.secondary-button {
+	@apply flex gap-2 hover:gap-4 items-center justify-center w-full uppercase rounded border border-slate-800 font-bold px-4 py-2 hover:bg-gray-200 transition-all duration-300;
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import { CartProvider } from './CartProvider';
 import { MessageProvider } from './MessageProvider';
 
 export const Providers = ({
@@ -7,5 +8,9 @@ export const Providers = ({
 }: Readonly<{
 	children: React.ReactNode;
 }>) => {
-	return <MessageProvider>{children}</MessageProvider>;
+	return (
+		<MessageProvider>
+			<CartProvider>{children}</CartProvider>
+		</MessageProvider>
+	);
 };

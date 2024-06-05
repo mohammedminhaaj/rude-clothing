@@ -3,7 +3,6 @@ import { Child } from '@/lib/types';
 type ShopLayoutProps = Child & {
 	tags: React.ReactNode;
 	products: React.ReactNode;
-	quickadd: React.ReactNode;
 };
 
 const ShopLayout: React.FC<ShopLayoutProps> = ({
