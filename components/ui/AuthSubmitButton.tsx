@@ -15,7 +15,7 @@ const AuthSubmitButton: React.FC<AuthSubmitButtonProps> = ({
 		title={text}
 		type='submit'
 		disabled={isSubmitting}
-		className='px-4 py-2 bg-slate-700 transition-colors hover:bg-slate-800 duration-300 focus:outline-slate-800 disabled:bg-gray-400 disabled:hover:bg-gray-500 text-white rounded font-extrabold'>
+		className='primary-button'>
 		{isSubmitting ? (
 			<span className='grid grid-cols-4 w-fit gap-2 mx-auto'>
 				<Loader className='col-span-1 animate-spin' />

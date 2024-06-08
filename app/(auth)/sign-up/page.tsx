@@ -20,7 +20,7 @@ const SignUp: React.FC = () => {
 			</h2>
 			<SignUpForm />
 			<p className='text-xs text-center'>
-				Already have an account?
+				Already have an account?{' '}
 				<AnimatedLink href='/login' text='Log in' />
 			</p>
 		</>

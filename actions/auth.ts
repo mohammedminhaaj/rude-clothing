@@ -10,21 +10,35 @@ import {
 } from '@supabase/supabase-js';
 
 export const signupUser: (
+	fullName: string,
 	email: string,
 	password: string
-) => Promise<IFormResponse> = async (email: string, password: string) => {
+) => Promise<IFormResponse> = async (
+	fullName: string,
+	email: string,
+	password: string
+) => {
 	const supabase = createClient();
 	const { user } = await getUser(supabase);
+
 	if (user && !user.is_anonymous) {
 		return {
 			code: 409,
 			message: 'User is already logged in',
 		};
 	}
+
+	const anonUserId = user?.id;
+
 	return supabase.auth
 		.signUp({
 			email: email,
 			password: password,
+			options: {
+				data: {
+					full_name: fullName,
+				},
+			},
 		})
 		.then((response: AuthResponse) => {
 			if (response.error) {
@@ -38,7 +52,8 @@ export const signupUser: (
 			return {
 				code: 200,
 				message: 'Account Created Successfully',
-			};
+				payload: { anonUserId },
+			} as IFormResponse;
 		})
 		.catch((error: any) => {
 			return {
@@ -61,6 +76,8 @@ export const loginUser: (
 			message: 'User is already logged in',
 		};
 	}
+	const anonUserId = user?.id;
+
 	return supabase.auth
 		.signInWithPassword({ email: email, password: password })
 		.then((response: AuthResponse) => {
@@ -75,7 +92,8 @@ export const loginUser: (
 			return {
 				code: 200,
 				message: 'User Logged In',
-			};
+				payload: { anonUserId },
+			} as IFormResponse;
 		})
 		.catch((error: any) => {
 			return {

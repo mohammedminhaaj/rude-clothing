@@ -77,12 +77,13 @@ const CartSidebar: React.FC = () => {
 											<h4 className='uppercase font-bold'>
 												Subtotal
 											</h4>
+
 											<motion.h3
 												key={`total-${totalAmount}`}
 												initial={{ opacity: 0, y: -10 }}
 												animate={{ opacity: 1, y: 0 }}
 												className='text-2xl font-bold'>
-												Rs. {totalAmount}
+												INR {totalAmount}
 											</motion.h3>
 										</div>
 										<button
@@ -92,18 +93,11 @@ const CartSidebar: React.FC = () => {
 											<Lock size={20} strokeWidth={1} />
 											Check out
 										</button>
-										<button className='secondary-button'>
-											<ShoppingBag
-												size={20}
-												strokeWidth={1}
-											/>
-											View Cart
-										</button>
+
 										<p>
 											<em className='text-xs font-extralight'>
-												Shipping, taxes and discount
-												code will be calculated at
-												checkout
+												Shipping, taxes and discount code will
+												be calculated at checkout
 											</em>
 										</p>
 									</section>

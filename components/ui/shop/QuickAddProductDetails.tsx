@@ -55,9 +55,9 @@ const QuickAddProductDetails: React.FC<QuickAddProductDetailsProps> = ({
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ bounce: false, delay: 0.4 }}
 					className='flex gap-3'>
-					<h3>Rs. {price}</h3>
+					<h3>INR {price}</h3>
 					<h3 className='line-through font-extralight'>
-						Rs. {originalPrice}
+						INR {originalPrice}
 					</h3>
 					{onSale && (
 						<h3 className='uppercase font-extralight text-xs text-white bg-slate-700 rounded p-1'>

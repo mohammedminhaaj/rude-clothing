@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthSubmitButton from '../ui/AuthSubmitButton';
+import { useCartContext } from '@/store/CartProvider';
 
 export type LoginFormInput = {
 	email: string;
@@ -30,6 +31,8 @@ const LoginForm: React.FC = () => {
 
 	const searchParams = useSearchParams();
 
+	const { appendCart } = useCartContext();
+
 	const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
 		try {
 			setIsSubmitting(true);
@@ -44,6 +47,7 @@ const LoginForm: React.FC = () => {
 			} else if (response.code === 200) {
 				toast(response.message);
 				const redirectTo: string | null = searchParams.get('next');
+				await appendCart(response.payload.anonUserId)
 				push(redirectTo ?? '/');
 			} else {
 				toast(response.message, MessageType.ERROR);

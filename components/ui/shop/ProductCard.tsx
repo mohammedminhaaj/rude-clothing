@@ -53,9 +53,9 @@ const ProductCard: React.FC<{ product: ProductListType }> = ({
 				</Link>
 
 				<div className='flex gap-2 items-center justify-center text-xs flex-wrap'>
-					<h3 className='font-bold'>Rs. {product.price}</h3>
+					<h3 className='font-bold'>INR {product.price}</h3>
 					<h3 className='font-extralight line-through'>
-						Rs. {product.originalPrice}
+						INR {product.originalPrice}
 					</h3>
 				</div>
 			</div>

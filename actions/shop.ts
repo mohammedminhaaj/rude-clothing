@@ -194,12 +194,6 @@ export const getProducts = async (searchParams: SearchParamType) => {
 };
 
 export const getSingleProduct = async (productId: string) => {
-	// const productTagSubQuery = db
-	// 	.select({
-	// 		data: sql`jsonb_build_object('id', ${ProductTag.id}, 'name', ${TagData.name})`,
-	// 	})
-	// 	.from(ProductTag)
-	// 	.innerJoin(TagData, eq(ProductTag.tagData, TagData.id));
 
 	const queryResult = await db
 		.select({

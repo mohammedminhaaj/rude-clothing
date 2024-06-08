@@ -47,7 +47,7 @@ const CartItem: React.FC<{ cart: CartItemType }> = ({
 				</Link>
 
 				<p className='uppercase text-xs'>Size: {cart.selectedSize}</p>
-				<p className='text-xs'>Rs. {cart.productPrice}</p>
+				<p className='text-xs'>INR {cart.productPrice}</p>
 				<QuantityInput
 					currentQuantity={cart.quantity}
 					cartId={cart.id}

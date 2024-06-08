@@ -1,6 +1,11 @@
 'use client';
 
-import { addToCart, deleteCart, updateQuantity } from '@/actions/cart';
+import {
+	addToCart,
+	appendCart as appendCartAction,
+	deleteCart,
+	updateQuantity,
+} from '@/actions/cart';
 import { CartData } from '@/components/ui/navigation_bar/CartAction';
 import { SingleProductTag } from '@/components/ui/shop/QuickAddSection';
 import { QuantityMode, ServerResponse } from '@/lib/types';
@@ -25,6 +30,7 @@ type CartState = {
 interface CartContextProps {
 	cartState: CartState;
 	loadCart: (data: CartData[]) => void;
+	appendCart: (anonUserId: string) => Promise<ServerResponse>;
 	removeCart: (id: number) => Promise<ServerResponse>;
 	insertCart: (
 		selectedTag: SingleProductTag,
@@ -41,6 +47,7 @@ interface CartContextProps {
 const CartContext = createContext<CartContextProps>({
 	cartState: { cart: [], isOpen: false, cartReady: false },
 	loadCart: (data: CartData[]) => {},
+	appendCart: (anonUserId: string) => Promise.resolve({ code: 0 }),
 	removeCart: async (id: number) => Promise.resolve({ code: 0 }),
 	insertCart: (
 		selectedTag: SingleProductTag,
@@ -84,6 +91,31 @@ export const CartProvider = ({
 			cart: cartItems,
 			cartReady: true,
 		}));
+	};
+
+	const appendCart = async (anonUserId: string) => {
+		setCartState((prev) => ({
+			...prev,
+			cartReady: false,
+		}));
+		try {
+			const data = await appendCartAction(anonUserId);
+			loadCart(data);
+			return {
+				code: 200,
+				message: 'Cart appended',
+			} as ServerResponse;
+		} catch {
+			setCartState((prev) => ({
+				...prev,
+				cartReady: true,
+				cart: [],
+			}));
+			return {
+				code: 500,
+				message: 'Failed to update cart items',
+			} as ServerResponse;
+		}
 	};
 
 	const removeCart = async (id: number) => {
@@ -173,6 +205,7 @@ export const CartProvider = ({
 			value={{
 				cartState,
 				loadCart,
+				appendCart,
 				removeCart,
 				insertCart,
 				updateCart,

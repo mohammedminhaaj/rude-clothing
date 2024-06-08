@@ -8,8 +8,10 @@ import { useRouter } from 'next/navigation';
 import { IFormResponse } from '@/lib/types';
 import { signupUser } from '@/actions/auth';
 import AuthSubmitButton from '../ui/AuthSubmitButton';
+import { useCartContext } from '@/store/CartProvider';
 
 export type SignUpFormInput = {
+	fullName: string;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -30,6 +32,8 @@ const SignUpForm: React.FC = () => {
 
 	const { push } = useRouter();
 
+	const { appendCart } = useCartContext();
+
 	const matchPasswords: (value: any) => boolean | string = (value: string) =>
 		watch('password') === value || "Passwords don't match";
 
@@ -37,6 +41,7 @@ const SignUpForm: React.FC = () => {
 		try {
 			setIsSubmitting(true);
 			const response: IFormResponse = await signupUser(
+				data.fullName,
 				data.email,
 				data.password
 			);
@@ -45,6 +50,7 @@ const SignUpForm: React.FC = () => {
 				push('/');
 			} else if (response.code === 200) {
 				toast(response.message);
+				await appendCart(response.payload.anonUserId);
 				push('/');
 			} else {
 				toast(response.message, MessageType.ERROR);
@@ -69,6 +75,32 @@ const SignUpForm: React.FC = () => {
 
 	return (
 		<form className='flex flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
+			<div className='relative'>
+				<input
+					id='fullname-field'
+					required
+					{...register('fullName', {
+						required: 'This field is required',
+						minLength: {
+							value: 6,
+							message: 'Name should be atleast 6 characters long',
+						},
+					})}
+					className={`floating-input peer ${errors.email && 'error'}`}
+					title='Full name'
+					type='text'
+				/>
+				<label
+					className={`floating-label ${errors.email && 'error'}`}
+					htmlFor='fullname-field'>
+					Full Name
+				</label>
+			</div>
+			{errors.fullName && (
+				<p className='text-xs text-red-500'>
+					{errors.fullName.message}
+				</p>
+			)}
 			<div className='relative'>
 				<input
 					id='email-field'

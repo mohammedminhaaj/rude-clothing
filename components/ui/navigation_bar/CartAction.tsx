@@ -39,6 +39,7 @@ const CartAction: React.FC<CartActionProps> = ({ data }: CartActionProps) => {
 	return (
 		<button
 			type='button'
+			disabled={!cartState.cartReady}
 			title='cart'
 			onClick={cartState.cartReady ? toggleCart : () => {}}
 			className='relative transition-all hover:scale-110 duration-300'>
