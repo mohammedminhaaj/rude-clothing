@@ -65,6 +65,6 @@ export const cartRelations = relations(Cart, ({ one }) => ({
 	}),
 	profile: one(Profile, {
 		fields: [Cart.user],
-		references: [Profile.id],
+		references: [Profile.authUser],
 	}),
 }));
