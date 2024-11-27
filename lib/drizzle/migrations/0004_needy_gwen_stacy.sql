@@ -1,0 +1,1 @@
+ALTER TABLE "tag_data" RENAME COLUMN "value" TO "color_code";

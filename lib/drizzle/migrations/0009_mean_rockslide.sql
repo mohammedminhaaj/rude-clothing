@@ -1,0 +1,1 @@
+ALTER TABLE "cart" ADD CONSTRAINT "unique_user_product_tag" UNIQUE("profile_id","product_tag_id");
