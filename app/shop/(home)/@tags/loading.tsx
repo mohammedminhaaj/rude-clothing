@@ -1,16 +1,17 @@
-export default function TagLoading() {
-	const skeleton: JSX.Element[] = [];
-	for (let i = 1; i <= 5; i++) {
-		skeleton.push(
-			<ul key={i} className='animate-pulse flex p-10 flex-col gap-2'>
-				<li className='bg-gray-300 h-3 rounded w-16'></li>
-				<li className='bg-gray-300 h-2 rounded w-10'></li>
-				<li className='bg-gray-300 h-2 rounded w-10'></li>
-				<li className='bg-gray-300 h-2 rounded w-10'></li>
-				<li className='bg-gray-300 h-2 rounded w-10'></li>
-			</ul>
-		);
-	}
+import Skeleton from '@/components/ui/Skeleton';
 
-	return <div className='col-span-3'>{skeleton}</div>;
-}
+const TagLoading: React.FC = () => (
+    <div className='col-span-3'>
+        {Array.from({ length: 5 }, (_, index) => (
+            <div key={index} className='p-10 space-y-2'>
+                <Skeleton className='h-3 w-16' />
+                <Skeleton className='h-2 w-10' />
+                <Skeleton className='h-2 w-10' />
+                <Skeleton className='h-2 w-10' />
+                <Skeleton className='h-2 w-10' />
+            </div>
+        ))}
+    </div>
+);
+
+export default TagLoading;

@@ -1,12 +1,14 @@
+import Skeleton from '../Skeleton';
+
 const QuickAddSectionSkeleton: React.FC = () => (
-	<section className='flex flex-col h-screen'>
-		<div className='bg-gray-300 w-full h-1/2 animate-pulse'></div>
+    <section className='flex flex-col h-screen'>
+        <Skeleton className='w-full h-1/2' />
         <section className='p-5 flex flex-col gap-5'>
-            <div className="h-6 w-1/2 animate-pulse bg-gray-300"></div>
-            <div className="h-6 w-1/4 animate-pulse bg-gray-300"></div>
-            <div className="h-28 animate-pulse bg-gray-300"></div>
+            <Skeleton className='h-6 w-1/2' />
+            <Skeleton className='h-6 w-1/4' />
+            <Skeleton className='h-28' />
         </section>
-	</section>
+    </section>
 );
 
 export default QuickAddSectionSkeleton;

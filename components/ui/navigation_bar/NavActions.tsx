@@ -1,14 +1,11 @@
 import SearchAction from './SearchAction';
 import { getUser } from '@/actions/auth';
-import { createClient } from '@/lib/supabase/server';
 import UserAction from './UserAction';
-import { db } from '@/lib/drizzle/db';
 import CartAction from './CartAction';
 import { getCartData } from '@/actions/cart';
 
 const NavActions: React.FC = async () => {
-	const supabase = createClient();
-	const { user } = await getUser(supabase);
+	const { user } = await getUser();
 
 	const cart = await getCartData(user);
 

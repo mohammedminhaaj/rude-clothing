@@ -1,75 +1,79 @@
-import { addToCart } from '@/actions/cart';
 import useToast from '@/hooks/useToast';
 import { MessageType } from '@/store/MessageProvider';
-import { useState } from 'react';
-import { Loader } from 'react-feather';
+import { useCallback, useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import { SingleProductTag } from './QuickAddSection';
 import { useCartContext } from '@/store/CartProvider';
 
 type AddToCartProps = {
-	isOutOfStock: boolean;
-	isDisabled: boolean;
-	selectedTag: SingleProductTag | null;
-	productId: string;
-	productName: string;
-	productPrice: string;
-	productImage: string | undefined;
-	handleToggleSidebar: () => void;
+    isOutOfStock: boolean;
+    isDisabled: boolean;
+    selectedTag: SingleProductTag | null;
+    productId: string;
+    productName: string;
+    productPrice: string;
+    productImage: string | undefined;
+    handleToggleSidebar: () => void;
 };
 
 const AddToCart: React.FC<AddToCartProps> = ({
-	isOutOfStock,
-	isDisabled,
-	selectedTag,
-	productId,
-	productName,
-	productPrice,
-	productImage,
-	handleToggleSidebar,
+    isOutOfStock,
+    isDisabled,
+    selectedTag,
+    productId,
+    productName,
+    productPrice,
+    productImage,
+    handleToggleSidebar,
 }: AddToCartProps) => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const { insertCart, toggleCart } = useCartContext();
+    const { insertCart, toggleCart } = useCartContext();
 
-	const toast = useToast();
+    const toast = useToast();
 
-	const handleAddToCart = async () => {
-		setIsLoading(true);
-		const data = await insertCart(
-			selectedTag!,
-			productId,
-			productName,
-			productPrice,
-			productImage
-		);
-		if (data.code >= 400) {
-			toast(data.message!, MessageType.ERROR);
-		} else {
-			toast(data.message!);
-			handleToggleSidebar();
-			toggleCart();
-		}
-		setIsLoading(false);
-	};
+    const buttonText = () => {
+        if (isOutOfStock) return 'Notify Me';
 
-	const handleNotifyMe = () => {
-		setIsLoading(true);
-	};
+        if (isLoading)
+            return <Loader2 className='animate-spin text-white stroke-1' />;
 
-	return (
-		<button
-			disabled={isDisabled || isLoading}
-			onClick={isOutOfStock ? handleNotifyMe : handleAddToCart}
-			className='primary-button'>
-			{isOutOfStock ? (
-				'Notify Me'
-			) : isLoading ? (
-				<Loader className='animate-spin text-black' strokeWidth={1} />
-			) : (
-				'Add to Cart'
-			)}
-		</button>
-	);
+        return 'Add to Cart';
+    };
+
+    const handleAddToCart = async () => {
+        setIsLoading(true);
+        const data = await insertCart(
+            selectedTag!,
+            productId,
+            productName,
+            productPrice,
+            productImage
+        );
+        if (data.code >= 400) {
+            toast(data.message!, MessageType.ERROR);
+        } else {
+            toast(data.message!);
+            handleToggleSidebar();
+            toggleCart();
+        }
+        setIsLoading(false);
+    };
+
+    const handleNotifyMe = () => {
+        // TODO: Implement Notify Me functionality
+        setIsLoading(true);
+    };
+
+    return (
+        <button
+            disabled={isDisabled || isLoading}
+            onClick={isOutOfStock ? handleNotifyMe : handleAddToCart}
+            className='primary-button'
+        >
+            {buttonText()}
+        </button>
+    );
 };
 
 export default AddToCart;

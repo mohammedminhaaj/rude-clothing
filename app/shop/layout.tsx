@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 const ShopLayout: React.FC<Child> = ({ children }: Child) => {
-	return <main>{children}</main>;
+	return <div>{children}</div>;
 };
 
 export default ShopLayout;

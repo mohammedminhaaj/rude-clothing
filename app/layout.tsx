@@ -11,28 +11,28 @@ const quicksand = Quicksand({ subsets: ['latin'] });
 export const libre = Libre_Baskerville({ weight: '700', subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Rude Clothing',
-	description: 'Up your clothing game',
+    title: 'Rude Clothing',
+    description: 'Up your clothing game',
 };
 
 export default function RootLayout({
-	children,
+    children,
 }: Readonly<{
-	children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-	return (
-		<html lang='en'>
-			<body className={quicksand.className}>
-				<Providers>
-					<section id='overlays'>
-						<Toast />
-						<CartSidebar />
-					</section>
-					<Header />
-					{children}
-					<Footer />
-				</Providers>
-			</body>
-		</html>
-	);
+    return (
+        <html lang='en'>
+            <body className={quicksand.className}>
+                <Providers>
+                    <section id='overlays'>
+                        <Toast />
+                        <CartSidebar />
+                    </section>
+                    <Header />
+                    <main className='max-w-7xl mx-auto'>{children}</main>
+                    <Footer />
+                </Providers>
+            </body>
+        </html>
+    );
 }

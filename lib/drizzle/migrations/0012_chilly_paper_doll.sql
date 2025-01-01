@@ -1,0 +1,1 @@
+ALTER TABLE "coupon" ALTER COLUMN "discount_rate" SET NOT NULL;
