@@ -1,1 +1,0 @@
-ALTER TABLE "tag_data" ALTER COLUMN "tag_master_id" SET NOT NULL;

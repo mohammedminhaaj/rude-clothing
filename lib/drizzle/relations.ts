@@ -2,11 +2,10 @@ import { relations } from 'drizzle-orm';
 import {
 	Cart,
 	Product,
-	ProductImage,
 	ProductTag,
 	Profile,
 	TagData,
-	TagMaster,
+	TagParent,
 	Users,
 } from './schema';
 
@@ -22,28 +21,20 @@ export const profileRelations = relations(Profile, ({ one, many }) => ({
 	cart: many(Cart),
 }));
 
-export const tagMasterRelations = relations(TagMaster, ({ many }) => ({
+export const tagMasterRelations = relations(TagParent, ({ many }) => ({
 	tagData: many(TagData),
 }));
 
 export const tagDataRelations = relations(TagData, ({ one, many }) => ({
-	tagMaster: one(TagMaster, {
+	tagMaster: one(TagParent, {
 		fields: [TagData.tagMaster],
-		references: [TagMaster.id],
+		references: [TagParent.id],
 	}),
 	products: many(ProductTag),
 }));
 
 export const productRelations = relations(Product, ({ many }) => ({
-	productImages: many(ProductImage),
 	tags: many(ProductTag),
-}));
-
-export const productImageRelations = relations(ProductImage, ({ one }) => ({
-	product: one(Product, {
-		fields: [ProductImage.product],
-		references: [Product.id],
-	}),
 }));
 
 export const productTagRelations = relations(ProductTag, ({ one, many }) => ({
@@ -64,7 +55,7 @@ export const cartRelations = relations(Cart, ({ one }) => ({
 		references: [ProductTag.id],
 	}),
 	profile: one(Profile, {
-		fields: [Cart.user],
+		fields: [Cart.profile],
 		references: [Profile.authUser],
 	}),
 }));

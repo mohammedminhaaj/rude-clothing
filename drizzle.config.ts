@@ -4,7 +4,7 @@ import { loadEnvConfig } from '@next/env';
 export const getDbUrl = () => {
 	const projectDir = process.cwd();
 	loadEnvConfig(projectDir);
-	return process.env.NEXT_PUBLIC_DATABASE_URL as string;
+	return process.env.DATABASE_URL as string;
 };
 
 export default defineConfig({
